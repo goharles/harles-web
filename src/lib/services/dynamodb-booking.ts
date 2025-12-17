@@ -93,7 +93,7 @@ export async function getBooking(bookingId: string): Promise<BookingDocument | n
     });
 
     const result = await dynamoDbClient.send(command);
-    return result.Item as BookingDocument || null;
+    return (result.Item as BookingDocument) || null;
   } catch (error) {
     console.error('Error getting booking:', error);
     return null;
