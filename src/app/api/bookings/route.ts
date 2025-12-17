@@ -12,6 +12,14 @@ import { createBooking } from '@/lib/services/dynamodb-booking';
  */
 export async function POST(request: NextRequest): Promise<NextResponse<BookingFormResponse>> {
   try {
+    // Debug logging for environment variables
+    console.log('API Route - Environment check:', {
+      hasAccessKey: !!process.env.APP_AWS_ACCESS_KEY_ID,
+      hasSecretKey: !!process.env.APP_AWS_SECRET_ACCESS_KEY,
+      region: process.env.APP_AWS_REGION || process.env.AWS_REGION,
+      bookingsTable: process.env.DYNAMODB_BOOKINGS_TABLE,
+    });
+
     const body = await request.json() as BookingFormData;
 
     // Validate required fields
