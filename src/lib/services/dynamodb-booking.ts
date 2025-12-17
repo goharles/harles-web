@@ -1,10 +1,10 @@
-import { 
-  PutCommand, 
-  GetCommand, 
-  UpdateCommand, 
-  ScanCommand, 
+import {
+  PutCommand,
+  GetCommand,
+  UpdateCommand,
+  ScanCommand,
   QueryCommand,
-  DeleteCommand 
+  DeleteCommand
 } from '@aws-sdk/lib-dynamodb';
 import { v4 as uuidv4 } from 'uuid';
 import { dynamoDbClient, TABLES } from '@/lib/config/aws-dynamodb';

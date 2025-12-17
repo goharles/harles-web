@@ -21,6 +21,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<BookingFo
     });
 
     const body = await request.json() as BookingFormData;
+    console.log('Received booking request:', { ...body, phone: body.phone ? '[REDACTED]' : undefined });
 
     // Validate required fields
     const validationErrors = validateBookingForm(body);
@@ -33,6 +34,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<BookingFo
 
     // Create booking in DynamoDB
     // Note: date and time are validated above, so they are guaranteed to be non-null here
+    console.log('Attempting to create booking in DynamoDB...');
     const result = await createBooking({
       name: `${body.firstName} ${body.lastName}`,
       email: body.email.trim().toLowerCase(),
@@ -41,6 +43,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<BookingFo
       time: body.time!,
       message: body.message || '',
     });
+    console.log('Booking creation result:', { success: result.success, error: result.error });
 
     if (!result.success) {
       return NextResponse.json({
