@@ -5,10 +5,12 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: false,
   },
-  // Ensure trailing slashes for Firebase Hosting compatibility
+  // Disable trailing slashes for Amplify
   trailingSlash: false,
   // Enable strict mode for better debugging
   reactStrictMode: true,
+  // Output configuration for AWS Amplify SSR
+  output: 'standalone',
 };
 
 export default nextConfig;

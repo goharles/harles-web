@@ -4,26 +4,26 @@ resource "aws_amplify_app" "main" {
   repository   = var.github_repository
   access_token = var.github_access_token
 
-  # Build settings for Next.js
+  # Build settings for Next.js SSR (App Router) - Single app format
   build_spec = <<-EOT
-    version: 1
-    applications:
-      - frontend:
-          phases:
-            preBuild:
-              commands:
-                - npm ci
-            build:
-              commands:
-                - npm run build
-          artifacts:
-            baseDirectory: .next
-            files:
-              - '**/*'
-          cache:
-            paths:
-              - node_modules/**/*
-        appRoot: .
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - npm ci --cache .npm --prefer-offline
+    build:
+      commands:
+        - npm run build
+  artifacts:
+    baseDirectory: .next
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - .next/cache/**/*
+      - .npm/**/*
+      - node_modules/**/*
   EOT
 
   # Environment variables
@@ -37,20 +37,7 @@ resource "aws_amplify_app" "main" {
     }])
   }
 
-  # Custom rules for Next.js routing
-  custom_rule {
-    source = "/<*>"
-    status = "404"
-    target = "/index.html"
-  }
-
-  custom_rule {
-    source = "</^[^.]+$|\\.(?!(css|gif|ico|jpg|js|png|txt|svg|woff|ttf|map|json)$)([^.]+$)/>"
-    status = "200"
-    target = "/index.html"
-  }
-
-  # Platform settings
+  # Platform settings - WEB_COMPUTE enables SSR
   platform = "WEB_COMPUTE"
 
   # IAM role
