@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Local reference repos / archives:
+    "_refs/**",
+    "fair-source-finder-main/**",
   ]),
 ]);
 
