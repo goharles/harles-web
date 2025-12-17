@@ -2,7 +2,8 @@ import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import { DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb';
 
 // AWS DynamoDB configuration
-const region = process.env.AWS_REGION || 'us-east-1';
+// Note: AWS_REGION is reserved in Amplify, so we use APP_AWS_REGION as fallback
+const region = process.env.AWS_REGION || process.env.APP_AWS_REGION || 'us-east-1';
 
 // Create DynamoDB client
 const client = new DynamoDBClient({

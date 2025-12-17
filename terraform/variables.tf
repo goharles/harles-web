@@ -27,8 +27,13 @@ variable "domain_name" {
 variable "github_repository" {
   description = "GitHub repository URL"
   type        = string
-  # You'll need to update this with your actual GitHub repo
-  default     = "https://github.com/yourusername/harles_web"
+  default     = "https://github.com/goharles/harles-web"
+}
+
+variable "github_access_token" {
+  description = "GitHub personal access token for Amplify"
+  type        = string
+  sensitive   = true
 }
 
 variable "git_branch" {

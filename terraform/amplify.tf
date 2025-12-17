@@ -1,7 +1,8 @@
 # AWS Amplify App
 resource "aws_amplify_app" "main" {
-  name       = var.project_name
-  repository = var.github_repository
+  name         = var.project_name
+  repository   = var.github_repository
+  access_token = var.github_access_token
 
   # Build settings for Next.js
   build_spec = <<-EOT
@@ -67,11 +68,12 @@ resource "aws_amplify_branch" "main" {
   branch_name = var.git_branch
 
   # Environment variables for the branch
+  # Note: AWS_REGION is automatically set by Amplify, no need to specify it
   environment_variables = {
     NEXT_PUBLIC_BASE_URL           = "https://${var.domain_name}"
     DYNAMODB_BOOKINGS_TABLE        = aws_dynamodb_table.bookings.name
     DYNAMODB_CONTACTS_TABLE        = aws_dynamodb_table.contacts.name
-    AWS_REGION                     = var.aws_region
+    APP_AWS_REGION                 = var.aws_region
     NODE_ENV                       = "production"
   }
 
